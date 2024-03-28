@@ -6,9 +6,10 @@ class App(ctk.CTk):
     def __init__(self):
         super().__init__()
 
-        self.title("Michael's Wordclock")
+        self.title("Wordclock")
         self.geometry("800x200")
         self.configure(fg_color="black")
+        self.configure(hover_color="black")
 
         self.label = ctk.CTkLabel(self, text="", fg_color="black", text_color="white")
         self.label.cget("font").configure(family="Consolas", size=42)
@@ -33,46 +34,53 @@ class WordClock(App):
         self.after(1000, self.update_time)
 
     def convert_to_words(self, time_str):
-        hour, minute, _ = time_str.split(":")
+        hour, minute, second = time_str.split(":")
         hour = int(hour)
         minute = int(minute)
+        second = int(second)
 
         hours = [
-            "zwölf",
-            "eins",
+            "zwölfi",
+            "eis",
             "zwei",
-            "drei",
-            "vier",
-            "fünf",
-            "sechs",
-            "sieben",
-            "acht",
-            "neun",
-            "zehn",
-            "elf"
+            "dü",
+            "vieri",
+            "fünfi",
+            "sechsi",
+            "siebni",
+            "achti",
+            "nüni",
+            "zehni",
+            "ölfi"
         ]
 
         minutes = [
-            "genau",
-            "fünf nach",
-            "zehn nach",
-            "viertel nach",
-            "zwanzig nach",
-            "fünf vor halb",
-            "halb",
-            "fünf nach halb",
-            "zwanzig vor",
+            "gnau",
+            "füf ab",
+            "zeh ab",
+            "viertel ab",
+            "zwinzg ab",
+            "füf vor halbi",
+            "halbi",
+            "füf ab halbi",
+            "zwinzg vor",
             "viertel vor",
-            "zehn vor",
-            "fünf vor"
+            "zeh vor",
+            "füf vor"
         ]
 
         if minute == 0:
-            return f"Es ist {hours[hour]} Uhr."
+            return f"Es isch jetz {hours[hour]} \n\n und {self.format_second(second)}"
         elif minute <= 30:
-            return f"Es ist {minutes[minute // 5]} {hours[hour % 12]}."
+            return f"Es isch jetz {minutes[minute // 5]} {hours[hour % 12]} \n\n und {self.format_second(second)}"
         else:
-            return f"Es ist {minutes[(60 - minute) // 5]} vor {hours[(hour + 1) % 12]}."
+            return f"Es isch jetz {minutes[(60 - minute) // 5]} {hours[(hour + 1) % 12]} \n\n und {self.format_second(second)}"
+
+    def format_second(self, second):
+        if second == 1:
+            return "ei Sekundä"
+        else:
+            return f"{second} Sekundä"
 
 
 if __name__ == "__main__":
